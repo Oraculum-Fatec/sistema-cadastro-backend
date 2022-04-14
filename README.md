@@ -8,7 +8,7 @@
    * [Como rodar a aplicação](#como-rodar-a-aplicação)
       * [Back-End](#back-end)
       * [Monitoramento](#monitoramento)
-   * [Demonstração da aplicação](#demonstração-da-aplicação)
+   * [Demonstração do monitoramento](#demonstração-do-monitoramento)
 
 ## Sobre
 Este repositório contém um Back-end de Sistema de Cadastro de Usuários simples no qual possui apenas métodos para criar e consultar, por paginação, os usuários registrados. O Objetivo principal desta aplicação é retornar dados que serão extraídas pelo monitoramento das ferramentas Prometheus e Grafana.
@@ -74,5 +74,19 @@ Usando o Docker, execute o container do Grafana com o comando abaixo e depois ab
 
       docker run -d -p 3000:3000 grafana/grafana
 
+Na interface do Grafana, acesse a opção ```Data sources``` na aba ```Configuration```, clique em ```Add data source``` e selecione o Prometheus na categoria ```Time series databases```. Após isso, nomeie seu database, altere a URL para a porta padrão do Prometheus: ```localhost:9090```, configure ```Access``` para ```Browser``` e, por fim, clique em ```Save & test```.
 
-## Demonstração da Aplicação
+Após adicionar o Data Source, vá para opção ```import``` na aba ```Create```, insira o ID de número 4701 no campo ```Import via grafana.com```. Em seguida, será retornado o Dashboard nomeado JVM(Micrometer), como o seu nome indica, configurado para exibir métricas disponíveis em aplicações feitas em Java. Adicione no campo  ```Prometheus``` o Data source anteriormente criado e finalize a importação clicando em  ```Import(Overwrite)```.
+
+## Demonstração do Monitoramento
+Abaixo é possível observar que a aplicação está sendo alvejava pelo Prometheus, como também realiza consultas do estado atual da aplicação.
+
+<p align="center">
+  <img alt="prom" src="assets/prometheus_show.gif">
+</p>
+
+Temos também, uma breve demonstração da configuração do Grafana e dos dados exibidos a partir do Dashboard importado.
+
+<p align="center">
+  <img alt="prom" src="assets/grafana_show.gif">
+</p>
