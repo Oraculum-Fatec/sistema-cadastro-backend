@@ -1,0 +1,34 @@
+groups:
+  - name: default
+    rules:
+      - alert: RequestRate
+        expr:  rate(http_server_requests_seconds_count{uri="/users"}[5m]) > 0
+        for: 10s
+        labels:
+          severity: high
+        annotations:
+          summary: Application stopped receiving requests
+         
+      - alert: CPU
+        expr:  process_cpu_usage > 0.0002
+        for: 10s
+        labels:
+          severity: high
+        annotations:
+          summary: Application used too much processing power
+          
+      - alert: Memory
+        expr:  sum(jvm_memory_used_bytes) > 1
+        for: 10s
+        labels:
+          severity: high
+        annotations:
+          summary: Application used too much memory
+        
+      - alert: TargetMissing
+        expr: up == 0
+        for: 10s
+        labels:
+          severity: critical
+        annotations:
+          summary: Prometheus Target Missing (instance {{ $labels.instance }})
