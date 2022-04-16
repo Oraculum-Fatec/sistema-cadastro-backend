@@ -9,6 +9,7 @@
       * [Back-End](#back-end)
       * [Monitoramento](#monitoramento)
    * [Demonstração do monitoramento](#demonstração-do-monitoramento)
+      * [Métricas e Extração de Dados](#métricas-e-extração-de-dados) 
 
 ## Sobre
 Este repositório contém um Back-end de Sistema de Cadastro de Usuários simples no qual possui apenas métodos para criar e consultar, por paginação, os usuários registrados. O Objetivo principal desta aplicação é retornar dados que serão extraídas pelo monitoramento das ferramentas Prometheus e Grafana.
@@ -88,5 +89,26 @@ Abaixo é possível observar que a aplicação está sendo alvejava pelo Prometh
 Temos também, uma breve demonstração da configuração do Grafana e dos dados exibidos a partir do Dashboard importado.
 
 <p align="center">
-  <img alt="prom" src="assets/grafana_show.gif">
+  <img alt="graf" src="assets/grafana_show.gif">
+</p>
+
+### Métricas e Extração de Dados
+Para analisar o estado atual da aplicação, é necessário focalizar as principais métricas capazes de indicar o funcionamento do sistema. Nesta situação, por ora, foram selecionadas as seguinte métricas:
+  - Contagem por minuto de todos os HTTP Request GET; 
+  - Contagem por minuto de todos os HTTP Request POST; 
+  - Tempo de Resposta, em segundo, de todos os HTTP Request GET;
+  - Tempo de Resposta, em segundo, de todos os HTTP Request POST;
+  - Porcentagem atual de uso da CPU pela aplicação; 
+  - Uso atual de Memória pela aplicação em bytes.
+
+Na configuração do Prometheus, foram definidas algumas regras de alertamento, ativadas pelas métricas citadas, para demonstrar como é possível utilizar dessas informações. Para pôr em uso estas regras, basta adicionar o arquivo ```rules.yml```, disponível neste repositório, no diretório do Prometheus. Usando Docker, será necessário executar um container com o comando:
+
+      docker run -d -p 9090:9090 -v <PATH_DO_ARQUIVO_prometheus.yml>:/etc/prometheus/prometheus.yml -v <PATH_DO_ARQUIVO_rules.yml>:/etc/prometheus/rules.yml prom/prometheus
+
+O Grafana possibilita a extração de dados dessas métricas específicas como um arquivo do tipo .csv. O arquivo será usado futuramente para o desenvolvimento da inteligência artificial capaz de prever indisponibildades do sistema.
+
+Segue abaixo as métricas selecionadas destacadas em um painel do Grafana, as regras de alertamento do Prometheus e a apresentação destes dados.
+
+<p align="center">
+  <img alt="data" src="assets/getting_data_show.gif">
 </p>
