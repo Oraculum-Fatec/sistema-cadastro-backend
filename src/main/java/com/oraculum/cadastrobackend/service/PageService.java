@@ -20,7 +20,7 @@ public class PageService {
 	
 	 public List<User> getUsers(int page) {
 
-        List<Integer> userPage = IntStream.rangeClosed(page*10-9, page+9)
+        List<Integer> userPage = IntStream.rangeClosed(page*10-9, page*10)
         .boxed().collect(Collectors.toList());
 
         List<User> userList = repository.findAllById(userPage);
