@@ -19,11 +19,15 @@ public class PageService {
     private UserRepository repository;
 	
 	 public List<User> getUsers(int page) {
+         List<User> userList;
 
-        List<Integer> userPage = IntStream.rangeClosed(page*10-9, page*10)
+        for(int x=1;x<=page;x++){
+            List<Integer> userPage = IntStream.rangeClosed(page*10-9, page+9)
         .boxed().collect(Collectors.toList());
 
-        List<User> userList = repository.findAllById(userPage);
+        userList = repository.findAllById(userPage);
+        }
+        
         return userList;
 	 }
 
